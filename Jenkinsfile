@@ -5,6 +5,11 @@ pipeline {
       defaultValue: 'beranger26',
       description: 'Docker Hub username'
     )
+     string(
+      name: 'PORT_EXPOSED',
+      defaultValue: '80',
+      description: 'PORT_EXPOSED'
+    )
   }
      environment {
        ID_DOCKER = "${ID_DOCKER_PARAMS}"
