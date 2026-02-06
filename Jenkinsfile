@@ -103,10 +103,6 @@ pipeline {
          '''
        }
      }
-
-
-
-
      stage('Push image in production and deploy it') {
        when {
          branch 'production'
@@ -131,6 +127,5 @@ pipeline {
          '''
        }
      }
-
   }
 }
