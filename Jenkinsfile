@@ -1,4 +1,11 @@
 pipeline {
+     parameters {
+    string(
+      name: 'ID_DOCKER_PARAMS',
+      defaultValue: 'beranger26',
+      description: 'Docker Hub username'
+    )
+  }
      environment {
        ID_DOCKER = "${ID_DOCKER_PARAMS}"
        IMAGE_NAME = "alpinehelloworld"
