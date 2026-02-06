@@ -81,51 +81,46 @@ pipeline {
      
      stage('Push image in staging and deploy it') {
        when {
-         branch 'master'
-       }
-       agent {
-         docker {
-           image 'node:18-alpine'
-           args '-v /var/run/docker.sock:/var/run/docker.sock'
-         }
-       }
-       environment {
-         HEROKU_API_KEY = credentials('heroku_api_key')
-       }
-       steps {
-         sh '''
-           node -v
-           npm install -g heroku@7.68.0
-           heroku container:login
-           heroku create $STAGING || true
-           heroku container:push web -a $STAGING
-           heroku container:release web -a $STAGING
-         '''
-       }
+              expression { GIT_BRANCH == 'origin/master' }
+            }
+      agent any
+      environment {
+          HEROKU_API_KEY = credentials('heroku_api_key')
+      }  
+      steps {
+          script {
+            sh '''
+              npm i -g heroku@7.68.0
+              heroku container:login
+              heroku create $STAGING || echo "project already exist"
+              heroku container:push -a $STAGING web
+              heroku container:release -a $STAGING web
+            '''
+          }
+        }
      }
+
+
+
      stage('Push image in production and deploy it') {
        when {
-         branch 'production'
-       }
-       agent {
-         docker {
-           image 'node:18-alpine'
-           args '-v /var/run/docker.sock:/var/run/docker.sock'
-         }
-       }
-       environment {
-         HEROKU_API_KEY = credentials('heroku_api_key')
-       }
-       steps {
-         sh '''
-           node -v
-           npm install -g heroku@7.68.0
-           heroku container:login
-           heroku create $PRODUCTION || true
-           heroku container:push web -a $PRODUCTION
-           heroku container:release web -a $PRODUCTION
-         '''
-       }
+              expression { GIT_BRANCH == 'origin/production' }
+            }
+      agent any
+      environment {
+          HEROKU_API_KEY = credentials('heroku_api_key')
+      }  
+      steps {
+          script {
+            sh '''
+              npm i -g heroku@7.68.0
+              heroku container:login
+              heroku create $PRODUCTION || echo "project already exist"
+              heroku container:push -a $PRODUCTION web
+              heroku container:release -a $PRODUCTION web
+            '''
+          }
+        }
      }
   }
 }
