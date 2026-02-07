@@ -83,7 +83,12 @@ pipeline {
        when {
               expression { GIT_BRANCH == 'origin/master' }
             }
-      agent any
+      agent {
+         docker {
+           image 'node:18-alpine'
+           args '-v /var/run/docker.sock:/var/run/docker.sock'
+               }
+      }
       environment {
           HEROKU_API_KEY = credentials('heroku_api_key')
       }  
@@ -100,13 +105,16 @@ pipeline {
         }
      }
 
-
-
      stage('Push image in production and deploy it') {
        when {
               expression { GIT_BRANCH == 'origin/production' }
             }
-      agent any
+      agent {
+         docker {
+           image 'node:18-alpine'
+           args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
       environment {
           HEROKU_API_KEY = credentials('heroku_api_key')
       }  
