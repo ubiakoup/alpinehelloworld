@@ -87,7 +87,7 @@ pipeline {
          docker {
            image 'node:18-alpine'
            args '-v /var/run/docker.sock:/var/run/docker.sock'
-               }
+         }
       }
       environment {
           HEROKU_API_KEY = credentials('heroku_api_key')
@@ -113,8 +113,8 @@ pipeline {
          docker {
            image 'node:18-alpine'
            args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
+         }
+     }
       environment {
           HEROKU_API_KEY = credentials('heroku_api_key')
       }  
