@@ -73,7 +73,7 @@ pipeline {
             }
       agent {
          docker {
-           image 'node:18-alpine'
+           image 'docker:26-cli'
            args '-v /var/run/docker.sock:/var/run/docker.sock'
          }
       }
@@ -83,6 +83,8 @@ pipeline {
       steps {
           script {
             sh '''
+              apk add --no-cache nodejs npm
+              node -v
               npm i -g heroku@7.68.0
               heroku container:login
               heroku create $STAGING || echo "project already exist"
@@ -99,7 +101,7 @@ pipeline {
             }
       agent {
          docker {
-           image 'node:18-alpine'
+           image 'docker:26-cli'
            args '-v /var/run/docker.sock:/var/run/docker.sock'
          }
      }
@@ -109,6 +111,8 @@ pipeline {
       steps {
           script {
             sh '''
+              apk add --no-cache nodejs npm
+              node -v
               npm i -g heroku@7.68.0
               heroku container:login
               heroku create $PRODUCTION || echo "project already exist"
