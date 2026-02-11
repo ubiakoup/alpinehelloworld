@@ -1,6 +1,6 @@
 # Alpine Hello World – CI/CD with Jenkins, Docker, and Heroku
 
-[![Build Status](http://192.168.57.100:8080/job/alpinehelloworld/badge/icon)](http://192.168.57.100:8080/job/alpinehelloworld/)
+[![Build Status](http://192.168.57.100:8080/buildStatus/icon?job=alpinehelloworld)](http://192.168.57.100:8080/job/alpinehelloworld/)
 
 This project demonstrates a **complete CI/CD pipeline** for a containerized application, from source code to production deployment, using **Jenkins**, **Docker**, **Docker Hub**, and **Heroku**.
 
